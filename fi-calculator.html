@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FI Calculator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f9;
+    }
+    h2 {
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    canvas {
+      max-width: 600px;
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h2>Financial Independence Calculator</h2>
+  
+  <form id="fi-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST" onsubmit="return false;">
+    <!-- Hidden fields for contact info and FormSubmit settings -->
+    <input type="hidden" name="contactName" id="contactName">
+    <input type="hidden" name="contactEmail" id="contactEmail">
+    <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+    <input type="hidden" name="_captcha" value="false">
+    
+    <label for="currentAge">Current Age:</label>
+    <input type="number" id="currentAge" name="currentAge" placeholder="Enter your current age">
+    
+    <label for="desiredAge">Desired FI Age:</label>
+    <input type="number" id="desiredAge" name="desiredAge" placeholder="Enter desired FI age">
+    
+    <label for="annualIncome">Current Annual Income:</label>
+    <input type="number" id="annualIncome" name="annualIncome" placeholder="Enter your current annual income">
+    
+    <label for="annualExpenses">Expected Annual Expenses in FI:</label>
+    <input type="number" id="annualExpenses" name="annualExpenses" placeholder="Enter expected annual expenses">
+    
+    <label for="currentSavings">Current Savings:</label>
+    <input type="number" id="currentSavings" name="currentSavings" placeholder="Enter your current savings">
+    
+    <label for="monthlySavings">Monthly Savings Rate:</label>
+    <input type="number" id="monthlySavings" name="monthlySavings" placeholder="Enter your monthly savings">
+    
+    <label for="inflationRate">Expected Inflation Rate (%):</label>
+    <input type="number" id="inflationRate" name="inflationRate" placeholder="Enter expected inflation rate">
+    
+    <label for="investmentReturn">Expected Return on Investments (%):</label>
+    <input type="number" id="investmentReturn" name="investmentReturn" placeholder="Enter expected return on investments">
+    
+    <button type="button" onclick="calculateFI()">Calculate FI</button>
+    <button type="button" onclick="submitFI()">Submit FI Data</button>
+  </form>
+  
+  <div class="result" id="result"></div>
+  
+  <canvas id="savingsChart"></canvas>
+  <canvas id="adjustedSavingsChart"></canvas>
+  
+  <script>
+    let savingsChart, adjustedChart;
+    
+    // On load, check for contact info and populate hidden fields.
+    window.onload = function() {
+      const contactName = localStorage.getItem('contactName');
+      const contactEmail = localStorage.getItem('contactEmail');
+      if (!contactName || !contactEmail) {
+        alert("Please fill in your contact information on the landing page first.");
+        window.location.href = "index.html";
+      } else {
+        document.getElementById('contactName').value = contactName;
+        document.getElementById('contactEmail').value = contactEmail;
+      }
+    }
+    
+    function calculateFI() {
+      const currentAge = parseInt(document.getElementById('currentAge').value);
+      const desiredAge = parseInt(document.getElementById('desiredAge').value);
+      const annualIncome = parseFloat(document.getElementById('annualIncome').value);
+      const annualExpenses = parseFloat(document.getElementById('annualExpenses').value);
+      const currentSavings = parseFloat(document.getElementById('currentSavings').
