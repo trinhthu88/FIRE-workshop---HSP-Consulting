@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FIRE Survey</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f9;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        .survey-section, .result-section {
-            margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #ffffff;
-            border-radius: 8px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        input[type="text"], input[type="number"], input[type="email"] {
-            width: 100%;
-            padding: 8px;
-            margin: 4px 0;
-            box-sizing: border-box;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIRE Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f9;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    .survey-section, .result-section {
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    input[type="text"], input[type="number"], input[type="email"] {
+      width: 100%;
+      padding: 8px;
+      margin: 4px 0;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 <body>
 
@@ -46,106 +46,166 @@
 
 <!-- CONTACT FORM -->
 <div id="contact-section" class="survey-section">
-    <h2>Contact Information</h2>
-    <form id="contact-form">
-        <label>Name: <input type="text" id="name" name="name" required></label><br>
-        <label>Age: <input type="number" id="age" name="age" required></label><br>
-        <label>Email: <input type="email" id="email" name="email" required></label><br>
-        <button type="button" onclick="startSurvey()">Start Survey</button>
-    </form>
+  <h2>Contact Information</h2>
+  <form id="contact-form">
+    <label>Name: <input type="text" id="name" name="name" required></label><br>
+    <label>Age: <input type="number" id="age" name="age" required></label><br>
+    <label>Email: <input type="email" id="email" name="email" required></label><br>
+    <button type="button" onclick="startSurvey()">Start Survey</button>
+  </form>
 </div>
 
 <!-- SURVEY FORM -->
 <div id="survey-section" class="survey-section" style="display: none;">
-    <h2>Survey</h2>
-    <form id="survey-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" id="result" name="result">
+  <h2>Survey</h2>
+  <form id="survey-form" onsubmit="return false;">
+    <!-- Question 1 -->
+    <p>1. What's your ideal lifestyle after achieving financial independence?<br>
+      <small>Phong cách sống lý tưởng của bạn sau khi đạt được độc lập tài chính là gì?</small>
+    </p>
+    <label><input type="radio" name="q1" value="A" required> A) Minimalist and frugal / Tối giản và tiết kiệm</label><br>
+    <label><input type="radio" name="q1" value="B"> B) Luxurious with few financial constraints / Sang trọng với ít áp lực về tài chính</label><br>
+    <label><input type="radio" name="q1" value="C"> C) Balance of work and leisure / Cân bằng giữa công việc và giải trí</label><br>
+    <label><input type="radio" name="q1" value="D"> D) Similar to current lifestyle, but without full-time work / Tương tự như lối sống hiện tại, nhưng không làm việc toàn thời gian</label><br><br>
 
-        <!-- Question 1 -->
-        <p>1. What's your ideal lifestyle after achieving financial independence?</p>
-        <label><input type="radio" name="q1" value="A" required> A) Minimalist and frugal</label><br>
-        <label><input type="radio" name="q1" value="B"> B) Luxurious with few financial constraints</label><br>
-        <label><input type="radio" name="q1" value="C"> C) Balance of work and leisure</label><br>
-        <label><input type="radio" name="q1" value="D"> D) Similar to current lifestyle, but without full-time work</label><br><br>
+    <!-- Question 2 -->
+    <p>2. How do you feel about work after achieving financial independence?<br>
+      <small>Bạn suy nghĩ thế nào về công việc sau khi đạt được độc lập về tài chính?</small>
+    </p>
+    <label><input type="radio" name="q2" value="A" required> A) Prefer not to work at all / Hoàn toàn không thích làm việc</label><br>
+    <label><input type="radio" name="q2" value="B"> B) Might work on passion projects or start a business / Có thể làm theo đam mê hoặc bắt đầu kinh doanh</label><br>
+    <label><input type="radio" name="q2" value="C"> C) Plan to work part-time or seasonally / Dự định làm việc bán thời gian hoặc theo mùa</label><br>
+    <label><input type="radio" name="q2" value="D"> D) Happy to work, but want the option not to / Hạnh phúc làm việc, nhưng muốn có sự lựa chọn không làm việc</label><br><br>
 
-        <!-- Question 2 -->
-        <p>2. How do you feel about work after achieving financial independence?</p>
-        <label><input type="radio" name="q2" value="A" required> A) Prefer not to work at all</label><br>
-        <label><input type="radio" name="q2" value="B"> B) Might work on passion projects or start a business</label><br>
-        <label><input type="radio" name="q2" value="C"> C) Plan to work part-time or seasonally</label><br>
-        <label><input type="radio" name="q2" value="D"> D) Happy to work, but want the option not to</label><br><br>
+    <!-- Question 3 -->
+    <p>3. What's your target savings rate (percentage of income saved)?<br>
+      <small>Mục tiêu tiết kiệm của bạn là bao nhiêu phần trăm thu nhập?</small>
+    </p>
+    <label><input type="radio" name="q3" value="A" required> A) 70% or higher / 70% hoặc cao hơn</label><br>
+    <label><input type="radio" name="q3" value="B"> B) 50% or higher / 50% hoặc cao hơn</label><br>
+    <label><input type="radio" name="q3" value="C"> C) 40-60% / Từ 40-60%</label><br>
+    <label><input type="radio" name="q3" value="D"> D) 30-50% / Từ 30-50%</label><br><br>
 
-        <!-- Question 3 -->
-        <p>3. What's your target savings rate (percentage of income saved)?</p>
-        <label><input type="radio" name="q3" value="A" required> A) 70% or higher</label><br>
-        <label><input type="radio" name="q3" value="B"> B) 50% or higher</label><br>
-        <label><input type="radio" name="q3" value="C"> C) 40-60%</label><br>
-        <label><input type="radio" name="q3" value="D"> D) 30-50%</label><br><br>
+    <!-- Question 4 -->
+    <p>4. How much of your current lifestyle are you willing to sacrifice to reach FI?<br>
+      <small>Bạn sẵn sàng hy sinh bao nhiêu trong lối sống hiện tại để đạt được độc lập tài chính?</small>
+    </p>
+    <label><input type="radio" name="q4" value="A" required> A) Willing to cut back significantly / Sẵn sàng cắt giảm đáng kể</label><br>
+    <label><input type="radio" name="q4" value="B"> B) Not willing to sacrifice current comforts / Không sẵn sàng hy sinh những tiện nghi hiện tại</label><br>
+    <label><input type="radio" name="q4" value="C"> C) Willing to make some adjustments / Sẵn sàng thực hiện một số điều chỉnh</label><br>
+    <label><input type="radio" name="q4" value="D"> D) Aiming for a balance of saving and enjoying life now / Hướng tới việc cân bằng giữa tiết kiệm và tận hưởng cuộc sống hiện tại</label><br><br>
 
-        <!-- Question 4 -->
-        <p>4. How much of your current lifestyle are you willing to sacrifice to reach FI?</p>
-        <label><input type="radio" name="q4" value="A" required> A) Willing to cut back significantly</label><br>
-        <label><input type="radio" name="q4" value="B"> B) Not willing to sacrifice current comforts</label><br>
-        <label><input type="radio" name="q4" value="C"> C) Willing to make some adjustments</label><br>
-        <label><input type="radio" name="q4" value="D"> D) Aiming for a balance of saving and enjoying life now</label><br><br>
+    <!-- Question 5 -->
+    <p>5. What's your primary motivation for pursuing FIRE?<br>
+      <small>Động lực chính khiến bạn theo đuổi mục tiêu FIRE là gì?</small>
+    </p>
+    <label><input type="radio" name="q5" value="A" required> A) Freedom from financial stress / Loại bỏ các căng thẳng tài chính</label><br>
+    <label><input type="radio" name="q5" value="B"> B) Ability to afford premium experiences and luxuries / Khả năng chi trả cho những trải nghiệm cao cấp và xa xỉ</label><br>
+    <label><input type="radio" name="q5" value="C"> C) Flexibility to choose when and how much to work / Linh hoạt trong việc chọn thời gian và số giờ làm việc</label><br>
+    <label><input type="radio" name="q5" value="D"> D) Security and peace of mind / An toàn và sự yên tâm</label><br><br>
 
-        <!-- Question 5 -->
-        <p>5. What's your primary motivation for pursuing FIRE?</p>
-        <label><input type="radio" name="q5" value="A" required> A) Freedom from financial stress</label><br>
-        <label><input type="radio" name="q5" value="B"> B) Ability to afford premium experiences and luxuries</label><br>
-        <label><input type="radio" name="q5" value="C"> C) Flexibility to choose when and how much to work</label><br>
-        <label><input type="radio" name="q5" value="D"> D) Security and peace of mind</label><br><br>
+    <!-- Question 6 -->
+    <p>6. How do you plan to spend your time in early retirement?<br>
+      <small>Bạn dự định sẽ dành thời gian nghỉ hưu sớm của mình như thế nào?</small>
+    </p>
+    <label><input type="radio" name="q6" value="A" required> A) Simple pleasures and free/low-cost activities / Hài lòng với những niềm vui đơn giản và các hoạt động miễn phí/chi phí thấp</label><br>
+    <label><input type="radio" name="q6" value="B"> B) Extensive travel, hobbies, and experiences / Du lịch nhiều, theo đuổi sở thích và trải nghiệm cuộc sống</label><br>
+    <label><input type="radio" name="q6" value="C"> C) Mix of leisure and part-time work or volunteering / Kết hợp giữa thư giãn và công việc bán thời gian hoặc tình nguyện</label><br>
+    <label><input type="radio" name="q6" value="D"> D) Similar to current lifestyle, but with more freedom / Giống như lối sống hiện tại, nhưng với nhiều tự do hơn</label><br><br>
 
-        <button type="button" onclick="submitSurvey()">Submit</button>
-    </form>
+    <!-- Question 7 -->
+    <p>7. What's your ideal living situation in early retirement?<br>
+      <small>Môi trường sống lý tưởng của bạn khi nghỉ hưu sớm là gì?</small>
+    </p>
+    <label><input type="radio" name="q7" value="A" required> A) Small, efficient home or possibly nomadic / Nhà nhỏ, tiện nghi cơ bản hoặc có thể di chuyển nếu cần</label><br>
+    <label><input type="radio" name="q7" value="B"> B) Large, comfortable home or multiple properties / Nhà lớn, tiện ích thoải mái hoặc có nhiều nhà</label><br>
+    <label><input type="radio" name="q7" value="C"> C) Modest home with the option to travel / Ngôi nhà bình thường, thêm sự lựa chọn đi du lịch</label><br>
+    <label><input type="radio" name="q7" value="D"> D) Current home or something similar / Nhà hiện tại hoặc tương tự</label><br><br>
+
+    <!-- Question 8 -->
+    <p>8. How do you feel about your career?<br>
+      <small>Bạn cảm thấy thế nào về sự nghiệp của mình?</small>
+    </p>
+    <label><input type="radio" name="q8" value="A" required> A) Want to leave as soon as possible / Muốn nghỉ việc càng sớm càng tốt</label><br>
+    <label><input type="radio" name="q8" value="B"> B) Enjoy it, but want the option to leave / Thích công việc, nhưng muốn có sự lựa chọn để nghỉ</label><br>
+    <label><input type="radio" name="q8" value="C"> C) Like it, but want to reduce hours or stress / Thích công việc, nhưng muốn giảm giờ làm hoặc căng thẳng</label><br>
+    <label><input type="radio" name="q8" value="D"> D) Generally satisfied, but want more control over time / Hài lòng nhưng mong muốn có nhiều quyền chủ động hơn với thời gian</label><br><br>
+
+    <button type="button" onclick="submitSurvey()">Submit Survey</button>
+  </form>
 </div>
 
-<!-- RESULTS -->
+<!-- RESULT SECTION -->
 <div id="result-section" class="result-section" style="display: none;">
-    <h2>Result</h2>
-    <p id="result-text"></p>
+  <h2>Results / Kết quả</h2>
+  <p id="result-text"></p>
 </div>
 
 <script>
-    function startSurvey() {
-        if (document.getElementById("name").value && document.getElementById("age").value && document.getElementById("email").value) {
-            document.getElementById("contact-section").style.display = "none";
-            document.getElementById("survey-section").style.display = "block";
-        } else {
-            alert("Please fill in all fields.");
-        }
+  function startSurvey() {
+    // Hide contact form and show survey form
+    document.getElementById("contact-section").style.display = "none";
+    document.getElementById("survey-section").style.display = "block";
+  }
+
+  function submitSurvey() {
+    // Initialize answer counts for A, B, C, D
+    let counts = { A: 0, B: 0, C: 0, D: 0 };
+
+    // Loop through questions 1 to 8
+    for (let i = 1; i <= 8; i++) {
+      const answer = document.querySelector(`input[name="q${i}"]:checked`);
+      if (answer) {
+        counts[answer.value]++;
+      } else {
+        alert("Please answer all questions.");
+        return;
+      }
     }
 
-    function submitSurvey() {
-        const answers = { A: 0, B: 0, C: 0, D: 0 };
+    // Determine the highest count
+    let maxCount = Math.max(counts.A, counts.B, counts.C, counts.D);
+    // Check how many options share the maximum value
+    let winners = Object.keys(counts).filter(letter => counts[letter] === maxCount);
+    
+    let resultText = "";
 
-        for (let i = 1; i <= 5; i++) {
-            const answer = document.querySelector(`input[name="q${i}"]:checked`);
-            if (answer) {
-                answers[answer.value]++;
-            } else {
-                alert("Please answer all questions.");
-                return;
-            }
-        }
-
-        let result = '';
-        if (answers.A > answers.B && answers.A > answers.C && answers.A > answers.D) {
-            result = "LeanFIRE";
-        } else if (answers.B > answers.A && answers.B > answers.C && answers.B > answers.D) {
-            result = "FatFIRE";
-        } else if (answers.C > answers.A && answers.C > answers.B && answers.C > answers.D) {
-            result = "BaristaFIRE";
-        } else if (answers.D > answers.A && answers.D > answers.B && answers.D > answers.C) {
-            result = "CoastFIRE";
-        } else {
-            result = "Mixed Approach";
-        }
-
-        document.getElementById("result").value = result;
-        document.getElementById("survey-form").submit();
+    if (winners.length > 1) {
+      // Equal mix or close scores
+      resultText = `<strong>Equal mix or close scores:</strong> You might resonate with multiple FIRE types. Consider a hybrid approach that takes elements from each type that appeals to you.
+      <br><br>
+      <em>Lựa chọn nhiều đáp án khác nhau:</em> Bạn có thể cảm thấy phù hợp với nhiều hình thức FIRE. Hãy xem xét một phương pháp kết hợp, lấy các yếu tố từ mỗi hình thức mà bạn thấy phù hợp.`;
+    } else {
+      // Only one winning option
+      switch(winners[0]) {
+        case "A":
+          resultText = `<strong>Mostly A's:</strong> You align most closely with <strong>LeanFIRE</strong>. You're comfortable with a minimalist lifestyle and are willing to make significant sacrifices to achieve financial independence as quickly as possible.
+          <br><br>
+          <em>Lựa chọn nhiều phương án A:</em> Bạn phù hợp nhất với <strong>LeanFIRE</strong>. Bạn thoải mái với lối sống tối giản và sẵn sàng hy sinh đáng kể để đạt được độc lập tài chính càng nhanh càng tốt.`;
+          break;
+        case "B":
+          resultText = `<strong>Mostly B's:</strong> Your preferences match with <strong>FatFIRE</strong>. You're aiming for a luxurious early retirement and are willing to work longer or save more aggressively to achieve a higher standard of living in retirement.
+          <br><br>
+          <em>Lựa chọn nhiều phương án B:</em> Sở thích của bạn phù hợp với <strong>FatFIRE</strong>. Bạn đang hướng đến một cuộc sống nghỉ hưu tiện nghi và sẵn sàng làm việc lâu hơn hoặc tiết kiệm nhiều hơn để đạt được một tiêu chuẩn sống cao hơn trong kỳ nghỉ hưu.`;
+          break;
+        case "C":
+          resultText = `<strong>Mostly C's:</strong> You're most aligned with <strong>BaristaFIRE</strong>. You value a balance between work and leisure, and are comfortable with the idea of part-time work to support a flexible lifestyle in early retirement.
+          <br><br>
+          <em>Lựa chọn nhiều phương án C:</em> Bạn phù hợp nhất với <strong>BaristaFIRE</strong>. Bạn đánh giá cao sự cân bằng giữa công việc và thư giãn, và thoải mái với ý tưởng làm việc bán thời gian để hỗ trợ phong cách sống linh hoạt trong kỳ nghỉ hưu sớm.`;
+          break;
+        case "D":
+          resultText = `<strong>Mostly D's:</strong> Your approach is most similar to <strong>CoastFIRE</strong>. You're focused on saving enough early in your career to ensure a comfortable traditional retirement, while enjoying life and potentially scaling back work in the meantime.
+          <br><br>
+          <em>Lựa chọn nhiều phương án D:</em> Chiến lược của bạn tương tự nhất với <strong>CoastFIRE</strong>. Bạn tập trung vào việc tiết kiệm đủ sớm trong sự nghiệp để đảm bảo một cuộc nghỉ hưu truyền thống thoải mái, đồng thời tận hưởng cuộc sống và có thể giảm bớt công việc trong thời gian này.`;
+          break;
+      }
     }
+
+    // Hide the survey form and display the result section
+    document.getElementById("survey-section").style.display = "none";
+    document.getElementById("result-section").style.display = "block";
+    document.getElementById("result-text").innerHTML = resultText;
+  }
 </script>
 
 </body>
