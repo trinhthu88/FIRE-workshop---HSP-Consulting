@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FIRE Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f9;
+    }
+    .survey-section {
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h2>FIRE Survey</h2>
+  <div class="survey-section">
+    <form id="survey-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST">
+      <!-- Hidden fields for contact info -->
+      <input type="hidden" name="contactName" id="contactName">
+      <input type="hidden" name="contactEmail" id="contactEmail">
+      <!-- _next and _captcha hidden fields for FormSubmit -->
+      <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+      <input type="hidden" name="_captcha" value="false">
+      
+      <!-- Question 1 -->
+      <p>1. What's your ideal lifestyle after achieving financial independence?<br>
+         <small>Phong cách sống lý tưởng của bạn sau khi đạt được độc lập tài chính là gì?</small>
+      </p>
+      <label><input type="radio" name="q1" value="A" required> A) Minimalist and frugal / Tối giản và tiết kiệm</label>
+      <label><input type="radio" name="q1" value="B"> B) Luxurious with few financial constraints / Sang trọng với ít áp lực về tài chính</label>
+      <label><input type="radio" name="q1" value="C"> C) Balance of work and leisure / Cân bằng giữa công việc và giải trí</label>
+      <label><input type="radio" name="q1" value="D"> D) Similar to current lifestyle, but without full-time work / Tương tự như lối sống hiện tại, nhưng không làm việc toàn thời gian</label>
+      
+      <!-- Question 2 -->
+      <p>2. How do you feel about work after achieving financial independence?<br>
+         <small>Bạn suy nghĩ thế nào về công việc sau khi đạt được độc lập tài chính?</small>
+      </p>
+      <label><input type="radio" name="q2" value="A" required> A) Prefer not to work at all / Hoàn toàn không thích làm việc</label>
+      <label><input type="radio" name="q2" value="B"> B) Might work on passion projects or start a business / Có thể làm theo đam mê hoặc bắt đầu kinh doanh</label>
+      <label><input type="radio" name="q2" value="C"> C) Plan to work part-time or seasonally / Dự định làm việc bán thời gian hoặc theo mùa</label>
+      <label><input type="radio" name="q2" value="D"> D) Happy to work, but want the option not to / Hạnh phúc làm việc, nhưng muốn có sự lựa chọn không làm việc</label>
+      
+      <!-- Question 3 -->
+      <p>3. What's your target savings rate (percentage of income saved)?<br>
+         <small>Mục tiêu tiết kiệm của bạn là bao nhiêu phần trăm thu nhập?</small>
+      </p>
+      <label><input type="radio" name="q3" value="A" required> A) 70% or higher / 70% hoặc cao hơn</label>
+      <label><input type="radio" name="q3" value="B"> B) 50% or higher / 50% hoặc cao hơn</label>
+      <label><input type="radio" name="q3" value="C"> C) 40-60% / Từ 40-60%</label>
+      <label><input type="radio" name="q3" value="D"> D) 30-50% / Từ 30-50%</label>
+      
+      <!-- Question 4 -->
+      <p>4. How much of your current lifestyle are you willing to sacrifice to reach FI?<br>
+         <small>Bạn sẵn sàng hy sinh bao nhiêu trong lối sống hiện tại để đạt được độc lập tài chính?</small>
+      </p>
+      <label><input type="radio" name="q4" value="A" required> A) Willing to cut back significantly / Sẵn sàng cắt giảm đáng kể</label>
+      <label><input type="radio" name="q4" value="B"> B) Not willing to sacrifice current comforts / Không sẵn sàng hy sinh tiện nghi hiện tại</label>
+      <label><input type="radio" name="q4" value="C"> C) Willing to make some adjustments / Sẵn sàng điều chỉnh một số thứ</label>
+      <label><input type="radio" name="q4" value="D"> D) Aiming for a balance of saving and enjoying life / Hướng tới cân bằng giữa tiết kiệm và tận hưởng cuộc sống</label>
+      
+      <!-- Question 5 -->
+      <p>5. What's your primary motivation for pursuing FIRE?<br>
+         <small>Động lực chính khiến bạn theo đuổi mục tiêu FIRE là gì?</small>
+      </p>
+      <label><input type="radio" name="q5" value="A" required> A) Freedom from financial stress / Loại bỏ căng thẳng tài chính</label>
+      <label><input type="radio" name="q5" value="B"> B) Ability to afford premium experiences / Có khả năng chi trả trải nghiệm cao cấp</label>
+      <label><input type="radio" name="q5" value="C"> C) Flexibility in work schedule / Linh hoạt trong lịch làm việc</label>
+      <label><input type="radio" name="q5" value="D"> D) Security and peace of mind / An toàn và sự yên tâm</label>
+      
+      <!-- Question 6 -->
+      <p>6. How do you plan to spend your time in early retirement?<br>
+         <small>Bạn dự định sẽ dành thời gian nghỉ hưu sớm của mình như thế nào?</small>
+      </p>
+      <label><input type="radio" name="q6" value="A" required> A) Simple pleasures and low-cost activities / Niềm vui đơn giản và hoạt động giá rẻ</label>
+      <label><input type="radio" name="q6" value="B"> B) Extensive travel and hobbies / Du lịch và sở thích phong phú</label>
+      <label><input type="radio" name="q6" value="C"> C) Mix of leisure and part-time work / Kết hợp thư giãn và làm việc bán thời gian</label>
+      <label><input type="radio" name="q6" value="D"> D) Similar to current lifestyle, but with more freedom / Tương tự hiện tại, nhưng với nhiều tự do hơn</label>
+      
+      <!-- Question 7 -->
+      <p>7. What's your ideal living situation in early retirement?<br>
+         <small>Môi trường sống lý tưởng của bạn khi nghỉ hưu sớm là gì?</small>
+      </p>
+      <label><input type="radio" name="q7" value="A" required> A) Small, efficient home or nomadic / Nhà nhỏ tiện nghi hoặc du mục</label>
+      <label><input type="radio" name="q7" value="B"> B) Large, comfortable home or multiple properties / Nhà lớn tiện nghi hoặc nhiều bất động sản</label>
+      <label><input type="radio" name="q7" value="C"> C) Modest home with travel options / Nhà bình thường, có khả năng du lịch</label>
+      <label><input type="radio" name="q7" value="D"> D) Current home or similar / Nhà hiện tại hoặc tương tự</label>
+      
+      <!-- Question 8 -->
+      <p>8. How do you feel about your career?<br>
+         <small>Bạn cảm thấy thế nào về sự nghiệp của mình?</small>
+      </p>
+      <label><input type="radio" name="q8" value="A" required> A) Want to leave as soon as possible / Muốn nghỉ việc càng sớm càng tốt</label>
+      <label><input type="radio" name="q8" value="B"> B) Enjoy it, but want the option to leave / Thích, nhưng muốn có lựa chọn nghỉ việc</label>
+      <label><input type="radio" name="q8" value="C"> C) Like it, but want to reduce hours/stress / Thích, nhưng muốn giảm giờ làm hoặc căng thẳng</label>
+      <label><input type="radio" name="q8" value="D"> D) Generally satisfied, but desire more control / Hài lòng, nhưng mong muốn nhiều quyền kiểm soát hơn</label>
+      
+      <br><br>
+      <button type="submit">Submit Survey</button>
+    </form>
+  </div>
+  
+  <script>
+    // Ensure contact info is available; if not, redirect to index.html.
+    window.onload = function() {
+      const contactName = localStorage.getItem('contactName');
+      const contactEmail = localStorage.getItem('contactEmail');
+      if (!contactName || !contactEmail) {
+        alert("Please fill in your contact information on the landing page first.");
+        window.location.href = "index.html";
+      } else {
+        document.getElementById('contactName').value = contactName;
+        document.getElementById('
