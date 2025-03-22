@@ -116,4 +116,121 @@
       const desiredAge = parseInt(document.getElementById('desiredAge').value);
       const annualIncome = parseFloat(document.getElementById('annualIncome').value);
       const annualExpenses = parseFloat(document.getElementById('annualExpenses').value);
-      const currentSavings = parseFloat(document.getElementById('currentSavings').
+      const currentSavings = parseFloat(document.getElementById('currentSavings').value);
+      const monthlySavings = parseFloat(document.getElementById('monthlySavings').value);
+      const inflationRate = parseFloat(document.getElementById('inflationRate').value) / 100;
+      const investmentReturn = parseFloat(document.getElementById('investmentReturn').value) / 100;
+      
+      if (isNaN(currentAge) || isNaN(desiredAge) || currentAge >= desiredAge ||
+          isNaN(annualExpenses) || isNaN(currentSavings) || isNaN(monthlySavings) ||
+          isNaN(inflationRate) || isNaN(investmentReturn)) {
+        alert("Please check your inputs. Ensure all fields are filled correctly and current age is less than desired FI age.");
+        return;
+      }
+      
+      const FI_Number = annualExpenses * 25;
+      const yearsToFI = desiredAge - currentAge;
+      
+      let years = [];
+      let projectedSavings = [];
+      let adjustedSavings = [];
+      
+      let savings = currentSavings;
+      for (let i = 0; i <= yearsToFI; i++) {
+        savings = savings * (1 + investmentReturn) + (monthlySavings * 12);
+        years.push(currentAge + i);
+        projectedSavings.push(savings);
+        let adjusted = savings / Math.pow(1 + inflationRate, i);
+        adjustedSavings.push(adjusted);
+      }
+      
+      const totalSavingsNeeded = FI_Number - savings;
+      const suggestedMonthlySavings = totalSavingsNeeded > 0 ? totalSavingsNeeded / (yearsToFI * 12) : 0;
+      
+      document.getElementById('result').innerHTML = `
+        <h3>Results:</h3>
+        <p>FI Number: <strong>${FI_Number.toFixed(2)}</strong></p>
+        <p>Years to FI: <strong>${yearsToFI}</strong></p>
+        <p>Projected Savings at FI Age: <strong>${savings.toFixed(2)}</strong></p>
+        <p>Adjusted Savings (today's dollars) at FI Age: <strong>${adjustedSavings[adjustedSavings.length - 1].toFixed(2)}</strong></p>
+        <p>Suggested Additional Monthly Savings: <strong>${suggestedMonthlySavings.toFixed(2)}</strong></p>
+      `;
+      
+      createChart(years, projectedSavings, FI_Number, 'savingsChart', "Projected Savings");
+      createChart(years, adjustedSavings, FI_Number, 'adjustedSavingsChart', "Inflation-Adjusted Savings");
+    }
+    
+    function createChart(years, dataArray, FI_Number, canvasId, chartLabel) {
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      
+      if (canvasId === 'savingsChart' && savingsChart) {
+        savingsChart.destroy();
+      }
+      if (canvasId === 'adjustedSavingsChart' && adjustedChart) {
+        adjustedChart.destroy();
+      }
+      
+      const chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: years,
+          datasets: [{
+            label: chartLabel,
+            data: dataArray,
+            borderColor: canvasId === 'savingsChart' ? 'rgba(40, 167, 69, 1)' : 'rgba(255, 159, 64, 1)',
+            backgroundColor: canvasId === 'savingsChart' ? 'rgba(40, 167, 69, 0.2)' : 'rgba(255, 159, 64, 0.2)',
+            fill: true,
+            tension: 0.1,
+          }, {
+            label: 'FI Number',
+            data: new Array(years.length).fill(FI_Number),
+            borderColor: 'rgba(255, 0, 0, 1)',
+            backgroundColor: 'rgba(255, 0, 0, 0.2)',
+            borderDash: [10, 5],
+            fill: false,
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Savings Amount'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Age'
+              }
+            }
+          },
+          plugins: {
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+            }
+          }
+        }
+      });
+      
+      if (canvasId === 'savingsChart') {
+        savingsChart = chartInstance;
+      } else if (canvasId === 'adjustedSavingsChart') {
+        adjustedChart = chartInstance;
+      }
+    }
+    
+    function submitFI() {
+      // Ensure the calculation has been performed (check if result div is not empty)
+      if (!document.getElementById('result').innerHTML) {
+        alert("Please calculate FI before submitting your data.");
+        return;
+      }
+      // Submit the form so that all inputs (including hidden contact fields) are sent to your email.
+      document.getElementById('fi-form').submit();
+    }
+  </script>
+</body>
+</html>
