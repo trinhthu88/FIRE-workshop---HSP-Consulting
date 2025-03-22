@@ -59,7 +59,6 @@
 <div id="survey-section" class="survey-section" style="display: none;">
     <h2>Survey</h2>
     <form id="survey-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST">
-        <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" id="result" name="result">
 
@@ -91,6 +90,13 @@
         <label><input type="radio" name="q4" value="C"> C) Willing to make some adjustments</label><br>
         <label><input type="radio" name="q4" value="D"> D) Aiming for a balance of saving and enjoying life now</label><br><br>
 
+        <!-- Question 5 -->
+        <p>5. What's your primary motivation for pursuing FIRE?</p>
+        <label><input type="radio" name="q5" value="A" required> A) Freedom from financial stress</label><br>
+        <label><input type="radio" name="q5" value="B"> B) Ability to afford premium experiences and luxuries</label><br>
+        <label><input type="radio" name="q5" value="C"> C) Flexibility to choose when and how much to work</label><br>
+        <label><input type="radio" name="q5" value="D"> D) Security and peace of mind</label><br><br>
+
         <button type="button" onclick="submitSurvey()">Submit</button>
     </form>
 </div>
@@ -112,14 +118,9 @@
     }
 
     function submitSurvey() {
-        const answers = {
-            A: 0,
-            B: 0,
-            C: 0,
-            D: 0
-        };
+        const answers = { A: 0, B: 0, C: 0, D: 0 };
 
-        for (let i = 1; i <= 4; i++) {
+        for (let i = 1; i <= 5; i++) {
             const answer = document.querySelector(`input[name="q${i}"]:checked`);
             if (answer) {
                 answers[answer.value]++;
