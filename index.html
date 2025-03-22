@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FIRE Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .survey-section, .result-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #ffffff;
+            border-radius: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="text"], input[type="number"], input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin: 4px 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Financial Independence Survey</h1>
+
+<!-- CONTACT FORM -->
+<div id="contact-section" class="survey-section">
+    <h2>Contact Information</h2>
+    <form id="contact-form">
+        <label>Name: <input type="text" id="name" name="name" required></label><br>
+        <label>Age: <input type="number" id="age" name="age" required></label><br>
+        <label>Email: <input type="email" id="email" name="email" required></label><br>
+        <button type="button" onclick="startSurvey()">Start Survey</button>
+    </form>
+</div>
+
+<!-- SURVEY FORM -->
+<div id="survey-section" class="survey-section" style="display: none;">
+    <h2>Survey</h2>
+    <form id="survey-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST">
+        <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" id="result" name="result">
+
+        <!-- Question 1 -->
+        <p>1. What's your ideal lifestyle after achieving financial independence?</p>
+        <label><input type="radio" name="q1" value="A" required> A) Minimalist and frugal</label><br>
+        <label><input type="radio" name="q1" value="B"> B) Luxurious with few financial constraints</label><br>
+        <label><input type="radio" name="q1" value="C"> C) Balance of work and leisure</label><br>
+        <label><input type="radio" name="q1" value="D"> D) Similar to current lifestyle, but without full-time work</label><br><br>
+
+        <!-- Question 2 -->
+        <p>2. How do you feel about work after achieving financial independence?</p>
+        <label><input type="radio" name="q2" value="A" required> A) Prefer not to work at all</label><br>
+        <label><input type="radio" name="q2" value="B"> B) Might work on passion projects or start a business</label><br>
+        <label><input type="radio" name="q2" value="C"> C) Plan to work part-time or seasonally</label><br>
+        <label><input type="radio" name="q2" value="D"> D) Happy to work, but want the option not to</label><br><br>
+
+        <!-- Question 3 -->
+        <p>3. What's your target savings rate (percentage of income saved)?</p>
+        <label><input type="radio" name="q3" value="A" required> A) 70% or higher</label><br>
+        <label><input type="radio" name="q3" value="B"> B) 50% or higher</label><br>
+        <label><input type="radio" name="q3" value="C"> C) 40-60%</label><br>
+        <label><input type="radio" name="q3" value="D"> D) 30-50%</label><br><br>
+
+        <!-- Question 4 -->
+        <p>4. How much of your current lifestyle are you willing to sacrifice to reach FI?</p>
+        <label><input type="radio" name="q4" value="A" required> A) Willing to cut back significantly</label><br>
+        <label><input type="radio" name="q4" value="B"> B) Not willing to sacrifice current comforts</label><br>
+        <label><input type="radio" name="q4" value="C"> C) Willing to make some adjustments</label><br>
+        <label><input type="radio" name="q4" value="D"> D) Aiming for a balance of saving and enjoying life now</label><br><br>
+
+        <button type="button" onclick="submitSurvey()">Submit</button>
+    </form>
+</div>
+
+<!-- RESULTS -->
+<div id="result-section" class="result-section" style="display: none;">
+    <h2>Result</h2>
+    <p id="result-text"></p>
+</div>
+
+<script>
+    function startSurvey() {
+        if (document.getElementById("name").value && document.getElementById("age").value && document.getElementById("email").value) {
+            document.getElementById("contact-section").style.display = "none";
+            document.getElementById("survey-section").style.display = "block";
+        } else {
+            alert("Please fill in all fields.");
+        }
+    }
+
+    function submitSurvey() {
+        const answers = {
+            A: 0,
+            B: 0,
+            C: 0,
+            D: 0
+        };
+
+        for (let i = 1; i <= 4; i++) {
+            const answer = document.querySelector(`input[name="q${i}"]:checked`);
+            if (answer) {
+                answers[answer.value]++;
+            } else {
+                alert("Please answer all questions.");
+                return;
+            }
+        }
+
+        let result = '';
+        if (answers.A > answers.B && answers.A > answers.C && answers.A > answers.D) {
+            result = "LeanFIRE";
+        } else if (answers.B > answers.A && answers.B > answers.C && answers.B > answers.D) {
+            result = "FatFIRE";
+        } else if (answers.C > answers.A && answers.C > answers.B && answers.C > answers.D) {
+            result = "BaristaFIRE";
+        } else if (answers.D > answers.A && answers.D > answers.B && answers.D > answers.C) {
+            result = "CoastFIRE";
+        } else {
+            result = "Mixed Approach";
+        }
+
+        document.getElementById("result").value = result;
+        document.getElementById("survey-form").submit();
+    }
+</script>
+
+</body>
+</html>
