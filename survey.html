@@ -20,6 +20,14 @@
     }
     h2 {
       color: #333;
+      text-align: center;
+    }
+    p {
+      font-weight: bold;
+    }
+    small {
+      font-weight: normal;
+      color: #555;
     }
     label {
       display: block;
@@ -33,9 +41,20 @@
       border-radius: 4px;
       cursor: pointer;
       margin-top: 15px;
+      display: block;
+      width: 100%;
     }
     button:hover {
       background-color: #218838;
+    }
+    #result-section {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: #e9f5e9;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      display: none;
     }
   </style>
 </head>
@@ -46,8 +65,7 @@
       <!-- Hidden fields for contact info -->
       <input type="hidden" name="contactName" id="contactName">
       <input type="hidden" name="contactEmail" id="contactEmail">
-      <!-- _next and _captcha hidden fields for FormSubmit -->
-      <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+      <!-- FormSubmit setting -->
       <input type="hidden" name="_captcha" value="false">
       
       <!-- Question 1 -->
@@ -127,8 +145,13 @@
     </form>
   </div>
   
+  <div id="result-section">
+    <h3>Your Survey Result</h3>
+    <div id="result-text"></div>
+  </div>
+  
   <script>
-    // Ensure contact info is available; if not, redirect to index.html.
+    // On load, ensure contact info exists; if not, redirect.
     window.onload = function() {
       const contactName = localStorage.getItem('contactName');
       const contactEmail = localStorage.getItem('contactEmail');
@@ -137,4 +160,73 @@
         window.location.href = "index.html";
       } else {
         document.getElementById('contactName').value = contactName;
-        document.getElementById('
+        document.getElementById('contactEmail').value = contactEmail;
+      }
+    };
+    
+    // Intercept form submission to calculate and display result, then send data via AJAX.
+    document.getElementById("survey-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      let counts = { A: 0, B: 0, C: 0, D: 0 };
+      
+      // Loop through questions 1 to 8.
+      for (let i = 1; i <= 8; i++) {
+        const answer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (answer) {
+          counts[answer.value]++;
+        } else {
+          alert("Please answer question " + i);
+          return;
+        }
+      }
+      
+      // Determine the result based on the highest count.
+      let maxCount = Math.max(counts.A, counts.B, counts.C, counts.D);
+      let winners = Object.keys(counts).filter(letter => counts[letter] === maxCount);
+      let resultText = "";
+      
+      if (winners.length > 1) {
+        resultText = `<strong>Equal mix or close scores:</strong> You might resonate with multiple FIRE types. 
+          <br><br><em>Lựa chọn nhiều đáp án khác nhau:</em> Bạn có thể cảm thấy phù hợp với nhiều hình thức FIRE. Hãy xem xét một phương pháp kết hợp, lấy các yếu tố từ mỗi hình thức mà bạn thấy phù hợp.`;
+      } else {
+        switch(winners[0]) {
+          case "A":
+            resultText = `<strong>Mostly A's:</strong> You align most closely with <strong>LeanFIRE</strong>. You're comfortable with a minimalist lifestyle and are willing to make significant sacrifices to achieve financial independence as quickly as possible.
+              <br><br><em>Lựa chọn nhiều phương án A:</em> Bạn phù hợp nhất với <strong>LeanFIRE</strong>. Bạn thoải mái với lối sống tối giản và sẵn sàng hy sinh đáng kể để đạt được độc lập tài chính càng nhanh càng tốt.`;
+            break;
+          case "B":
+            resultText = `<strong>Mostly B's:</strong> Your preferences match with <strong>FatFIRE</strong>. You're aiming for a luxurious early retirement and are willing to work longer or save more aggressively to achieve a higher standard of living in retirement.
+              <br><br><em>Lựa chọn nhiều phương án B:</em> Sở thích của bạn phù hợp với <strong>FatFIRE</strong>. Bạn đang hướng đến một cuộc sống nghỉ hưu tiện nghi và sẵn sàng làm việc lâu hơn hoặc tiết kiệm nhiều hơn để đạt được một tiêu chuẩn sống cao hơn trong kỳ nghỉ hưu.`;
+            break;
+          case "C":
+            resultText = `<strong>Mostly C's:</strong> You're most aligned with <strong>BaristaFIRE</strong>. You value a balance between work and leisure, and are comfortable with the idea of part-time work to support a flexible lifestyle in early retirement.
+              <br><br><em>Lựa chọn nhiều phương án C:</em> Bạn phù hợp nhất với <strong>BaristaFIRE</strong>. Bạn đánh giá cao sự cân bằng giữa công việc và thư giãn, và thoải mái với ý tưởng làm việc bán thời gian để hỗ trợ phong cách sống linh hoạt trong kỳ nghỉ hưu sớm.`;
+            break;
+          case "D":
+            resultText = `<strong>Mostly D's:</strong> Your approach is most similar to <strong>CoastFIRE</strong>. You're focused on saving enough early in your career to ensure a comfortable traditional retirement, while enjoying life and potentially scaling back work in the meantime.
+              <br><br><em>Lựa chọn nhiều phương án D:</em> Chiến lược của bạn tương tự nhất với <strong>CoastFIRE</strong>. Bạn tập trung vào việc tiết kiệm đủ sớm trong sự nghiệp để đảm bảo một cuộc nghỉ hưu truyền thống thoải mái, đồng thời tận hưởng cuộc sống và có thể giảm bớt công việc trong thời gian này.`;
+            break;
+        }
+      }
+      
+      // Display the result on the page.
+      document.getElementById("result-section").style.display = "block";
+      document.getElementById("result-text").innerHTML = resultText;
+      
+      // Optionally, also send the data via AJAX to FormSubmit.
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      }).then(response => {
+        if (!response.ok) {
+          alert("There was an issue submitting your data.");
+        }
+      }).catch(error => {
+        alert("Submission error.");
+      });
+    });
+  </script>
+</body>
+</html>
