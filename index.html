@@ -43,19 +43,6 @@
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    .contact-form button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #007bff;
-      border: none;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .contact-form button:hover {
-      background-color: #0069d9;
-    }
   </style>
 </head>
 <body>
@@ -68,7 +55,6 @@
     <input type="text" id="name" placeholder="Your name">
     <label for="email">Email:</label>
     <input type="text" id="email" placeholder="Your email">
-    <button onclick="saveContact()">Save Contact</button>
   </div>
   
   <div>
@@ -77,25 +63,16 @@
   </div>
   
   <script>
-    function saveContact() {
+    function goToPage(page) {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       if(name === "" || email === "") {
-        alert("Please fill in both name and email.");
+        alert("Please fill in both name and email before proceeding.");
         return;
       }
+      // Save contact info so that other pages can use it.
       localStorage.setItem('contactName', name);
       localStorage.setItem('contactEmail', email);
-      alert("Contact info saved!");
-    }
-    
-    function goToPage(page) {
-      const name = localStorage.getItem('contactName');
-      const email = localStorage.getItem('contactEmail');
-      if(!name || !email) {
-        alert("Please fill in your contact information first.");
-        return;
-      }
       window.location.href = page;
     }
   </script>
