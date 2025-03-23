@@ -61,11 +61,12 @@
 <body>
   <h2>FIRE Survey</h2>
   <div class="survey-section">
-    <!-- Use your Formspree endpoint here -->
+    <!-- The form uses your Formspree endpoint -->
     <form id="survey-form" action="https://formspree.io/f/xjkywjvd" method="POST">
       <!-- Hidden fields for contact info -->
       <input type="hidden" name="contactName" id="contactName">
       <input type="hidden" name="contactEmail" id="contactEmail">
+      <!-- Formspree setting -->
       <input type="hidden" name="_captcha" value="false">
       
       <!-- Question 1 -->
@@ -151,7 +152,7 @@
   </div>
   
   <script>
-    // On load, check for contact info; if not present, redirect.
+    // When the page loads, check if contact info exists; if not, redirect to index.html.
     window.onload = function() {
       const contactName = localStorage.getItem('contactName');
       const contactEmail = localStorage.getItem('contactEmail');
@@ -164,7 +165,7 @@
       }
     };
     
-    // Intercept form submission to calculate and display the result, then send data via AJAX.
+    // Intercept the form submission: calculate result, display it, then send data via AJAX.
     document.getElementById("survey-form").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
@@ -181,7 +182,7 @@
         }
       }
       
-      // Determine the result.
+      // Determine result based on the highest count.
       let maxCount = Math.max(counts.A, counts.B, counts.C, counts.D);
       let winners = Object.keys(counts).filter(letter => counts[letter] === maxCount);
       let resultText = "";
@@ -197,7 +198,7 @@
             break;
           case "B":
             resultText = `<strong>Mostly B's:</strong> Your preferences match with <strong>FatFIRE</strong>. You're aiming for a luxurious early retirement and are willing to work longer or save more aggressively to achieve a higher standard of living in retirement.<br><br>
-              <em>Lựa chọn nhiều phương án B:</em> Sở thích của bạn phù hợp với <strong>FatFIRE</strong>. Bạn đang hướng đến một cuộc sống nghỉ hưu tiện nghi và sẵn sàng làm việc lâu hơn hoặc tiết kiệm nhiều hơn để đạt được một tiêu chuẩn sống cao hơn trong kỳ nghỉ hưu.`;
+              <em>Lựa chọn nhiều phương án B:</em> Sở thích của bạn phù hợp với <strong>FatFIRE</strong>. Bạn đang hướng đến một cuộc sống nghỉ hưu tiện nghi và sẵn sàng làm việc lâu hơn hoặc tiết kiệm nhiều hơn để đạt được một tiêu chuẩn sống cao hơn.`;
             break;
           case "C":
             resultText = `<strong>Mostly C's:</strong> You're most aligned with <strong>BaristaFIRE</strong>. You value a balance between work and leisure, and are comfortable with the idea of part-time work to support a flexible lifestyle in early retirement.<br><br>
