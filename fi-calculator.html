@@ -61,8 +61,8 @@
 </head>
 <body>
   <h2>Financial Independence Calculator</h2>
-  <form id="fi-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST">
-    <!-- Hidden fields for contact info and FormSubmit settings -->
+  <form id="fi-form" action="https://formspree.io/f/xjkywjvd" method="POST">
+    <!-- Hidden fields for contact info and Formspree settings -->
     <input type="hidden" name="contactName" id="contactName">
     <input type="hidden" name="contactEmail" id="contactEmail">
     <input type="hidden" name="_captcha" value="false">
@@ -91,7 +91,7 @@
     <label for="investmentReturn">Expected Return on Investments (%):</label>
     <input type="number" id="investmentReturn" name="investmentReturn" placeholder="Enter expected return on investments">
     
-    <!-- Single button for calculating and auto-submitting FI data -->
+    <!-- Single button that calculates and auto-submits the form -->
     <button type="button" onclick="calculateAndSubmitFI()">Calculate FI</button>
   </form>
   
@@ -107,7 +107,7 @@
   <script>
     let savingsChart, adjustedChart;
     
-    // On load, check for contact info and populate hidden fields.
+    // On load, check contact info and populate hidden fields.
     window.onload = function() {
       const contactName = localStorage.getItem('contactName');
       const contactEmail = localStorage.getItem('contactEmail');
@@ -137,34 +137,29 @@
         return;
       }
       
-      // FI Number using the rule of 25
       const FI_Number = annualExpenses * 25;
       const yearsToFI = desiredAge - currentAge;
       
-      // Use monthly compounding for each year.
+      // Calculate using monthly compounding:
       const monthlyRate = investmentReturn / 12;
       let years = [];
       let projectedSavings = [];
       let adjustedSavings = [];
       let savings = currentSavings;
       
-      // For each full year, calculate the savings using monthly compounding
       for (let y = 1; y <= yearsToFI; y++) {
         // Compound for 12 months:
         savings = savings * Math.pow(1 + monthlyRate, 12) +
                   monthlySavings * ((Math.pow(1 + monthlyRate, 12) - 1) / monthlyRate);
         years.push(currentAge + y);
         projectedSavings.push(savings);
-        // Discount the savings to today's dollars using inflation
         let adjusted = savings / Math.pow(1 + inflationRate, y);
         adjustedSavings.push(adjusted);
       }
       
-      // Calculate suggested additional monthly savings if current trajectory falls short
       const totalSavingsNeeded = FI_Number - savings;
       const suggestedMonthlySavings = totalSavingsNeeded > 0 ? totalSavingsNeeded / (yearsToFI * 12) : 0;
       
-      // Display results
       document.getElementById('result').innerHTML = `
         <h3>Results:</h3>
         <p>FI Number: <strong>${FI_Number.toFixed(2)}</strong></p>
@@ -177,7 +172,7 @@
       createChart(years, projectedSavings, FI_Number, 'savingsChart', "Projected Savings");
       createChart(years, adjustedSavings, FI_Number, 'adjustedSavingsChart', "Inflation-Adjusted Savings");
       
-      // After a short delay (to allow users to see results/charts), auto-submit the form via AJAX.
+      // Auto-submit form data via AJAX after a brief delay.
       setTimeout(() => {
         submitFI();
       }, 1500);
@@ -250,9 +245,7 @@
       fetch(form.action, {
         method: "POST",
         body: new FormData(form),
-        headers: {
-          "Accept": "application/json"
-        }
+        headers: { "Accept": "application/json" }
       }).then(response => {
         if (response.ok) {
           form.style.display = "none";
