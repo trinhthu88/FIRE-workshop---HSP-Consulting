@@ -61,11 +61,11 @@
 <body>
   <h2>FIRE Survey</h2>
   <div class="survey-section">
-    <form id="survey-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST">
+    <!-- Use your Formspree endpoint here -->
+    <form id="survey-form" action="https://formspree.io/f/xjkywjvd" method="POST">
       <!-- Hidden fields for contact info -->
       <input type="hidden" name="contactName" id="contactName">
       <input type="hidden" name="contactEmail" id="contactEmail">
-      <!-- FormSubmit setting -->
       <input type="hidden" name="_captcha" value="false">
       
       <!-- Question 1 -->
@@ -151,7 +151,7 @@
   </div>
   
   <script>
-    // On load, ensure contact info exists; if not, redirect.
+    // On load, check for contact info; if not present, redirect.
     window.onload = function() {
       const contactName = localStorage.getItem('contactName');
       const contactEmail = localStorage.getItem('contactEmail');
@@ -164,7 +164,7 @@
       }
     };
     
-    // Intercept form submission to calculate and display result, then send data via AJAX.
+    // Intercept form submission to calculate and display the result, then send data via AJAX.
     document.getElementById("survey-form").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
@@ -181,31 +181,31 @@
         }
       }
       
-      // Determine the result based on the highest count.
+      // Determine the result.
       let maxCount = Math.max(counts.A, counts.B, counts.C, counts.D);
       let winners = Object.keys(counts).filter(letter => counts[letter] === maxCount);
       let resultText = "";
       
       if (winners.length > 1) {
-        resultText = `<strong>Equal mix or close scores:</strong> You might resonate with multiple FIRE types. 
-          <br><br><em>Lựa chọn nhiều đáp án khác nhau:</em> Bạn có thể cảm thấy phù hợp với nhiều hình thức FIRE. Hãy xem xét một phương pháp kết hợp, lấy các yếu tố từ mỗi hình thức mà bạn thấy phù hợp.`;
+        resultText = `<strong>Equal mix or close scores:</strong> You might resonate with multiple FIRE types. <br><br>
+          <em>Lựa chọn nhiều đáp án khác nhau:</em> Bạn có thể cảm thấy phù hợp với nhiều hình thức FIRE. Hãy xem xét một phương pháp kết hợp, lấy các yếu tố từ mỗi hình thức mà bạn thấy phù hợp.`;
       } else {
         switch(winners[0]) {
           case "A":
-            resultText = `<strong>Mostly A's:</strong> You align most closely with <strong>LeanFIRE</strong>. You're comfortable with a minimalist lifestyle and are willing to make significant sacrifices to achieve financial independence as quickly as possible.
-              <br><br><em>Lựa chọn nhiều phương án A:</em> Bạn phù hợp nhất với <strong>LeanFIRE</strong>. Bạn thoải mái với lối sống tối giản và sẵn sàng hy sinh đáng kể để đạt được độc lập tài chính càng nhanh càng tốt.`;
+            resultText = `<strong>Mostly A's:</strong> You align most closely with <strong>LeanFIRE</strong>. You're comfortable with a minimalist lifestyle and are willing to make significant sacrifices to achieve financial independence as quickly as possible.<br><br>
+              <em>Lựa chọn nhiều phương án A:</em> Bạn phù hợp nhất với <strong>LeanFIRE</strong>. Bạn thoải mái với lối sống tối giản và sẵn sàng hy sinh đáng kể để đạt được độc lập tài chính càng nhanh càng tốt.`;
             break;
           case "B":
-            resultText = `<strong>Mostly B's:</strong> Your preferences match with <strong>FatFIRE</strong>. You're aiming for a luxurious early retirement and are willing to work longer or save more aggressively to achieve a higher standard of living in retirement.
-              <br><br><em>Lựa chọn nhiều phương án B:</em> Sở thích của bạn phù hợp với <strong>FatFIRE</strong>. Bạn đang hướng đến một cuộc sống nghỉ hưu tiện nghi và sẵn sàng làm việc lâu hơn hoặc tiết kiệm nhiều hơn để đạt được một tiêu chuẩn sống cao hơn trong kỳ nghỉ hưu.`;
+            resultText = `<strong>Mostly B's:</strong> Your preferences match with <strong>FatFIRE</strong>. You're aiming for a luxurious early retirement and are willing to work longer or save more aggressively to achieve a higher standard of living in retirement.<br><br>
+              <em>Lựa chọn nhiều phương án B:</em> Sở thích của bạn phù hợp với <strong>FatFIRE</strong>. Bạn đang hướng đến một cuộc sống nghỉ hưu tiện nghi và sẵn sàng làm việc lâu hơn hoặc tiết kiệm nhiều hơn để đạt được một tiêu chuẩn sống cao hơn trong kỳ nghỉ hưu.`;
             break;
           case "C":
-            resultText = `<strong>Mostly C's:</strong> You're most aligned with <strong>BaristaFIRE</strong>. You value a balance between work and leisure, and are comfortable with the idea of part-time work to support a flexible lifestyle in early retirement.
-              <br><br><em>Lựa chọn nhiều phương án C:</em> Bạn phù hợp nhất với <strong>BaristaFIRE</strong>. Bạn đánh giá cao sự cân bằng giữa công việc và thư giãn, và thoải mái với ý tưởng làm việc bán thời gian để hỗ trợ phong cách sống linh hoạt trong kỳ nghỉ hưu sớm.`;
+            resultText = `<strong>Mostly C's:</strong> You're most aligned with <strong>BaristaFIRE</strong>. You value a balance between work and leisure, and are comfortable with the idea of part-time work to support a flexible lifestyle in early retirement.<br><br>
+              <em>Lựa chọn nhiều phương án C:</em> Bạn phù hợp nhất với <strong>BaristaFIRE</strong>. Bạn đánh giá cao sự cân bằng giữa công việc và thư giãn, và thoải mái với ý tưởng làm việc bán thời gian để hỗ trợ phong cách sống linh hoạt trong kỳ nghỉ hưu sớm.`;
             break;
           case "D":
-            resultText = `<strong>Mostly D's:</strong> Your approach is most similar to <strong>CoastFIRE</strong>. You're focused on saving enough early in your career to ensure a comfortable traditional retirement, while enjoying life and potentially scaling back work in the meantime.
-              <br><br><em>Lựa chọn nhiều phương án D:</em> Chiến lược của bạn tương tự nhất với <strong>CoastFIRE</strong>. Bạn tập trung vào việc tiết kiệm đủ sớm trong sự nghiệp để đảm bảo một cuộc nghỉ hưu truyền thống thoải mái, đồng thời tận hưởng cuộc sống và có thể giảm bớt công việc trong thời gian này.`;
+            resultText = `<strong>Mostly D's:</strong> Your approach is most similar to <strong>CoastFIRE</strong>. You're focused on saving enough early in your career to ensure a comfortable traditional retirement, while enjoying life and potentially scaling back work in the meantime.<br><br>
+              <em>Lựa chọn nhiều phương án D:</em> Chiến lược của bạn tương tự nhất với <strong>CoastFIRE</strong>. Bạn tập trung vào việc tiết kiệm đủ sớm trong sự nghiệp để đảm bảo một cuộc nghỉ hưu truyền thống thoải mái, đồng thời tận hưởng cuộc sống và có thể giảm bớt công việc trong thời gian này.`;
             break;
         }
       }
@@ -214,7 +214,7 @@
       document.getElementById("result-section").style.display = "block";
       document.getElementById("result-text").innerHTML = resultText;
       
-      // Optionally, also send the data via AJAX to FormSubmit.
+      // Send the form data via AJAX using Formspree.
       fetch(form.action, {
         method: "POST",
         body: new FormData(form),
