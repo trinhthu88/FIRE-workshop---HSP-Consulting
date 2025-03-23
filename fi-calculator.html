@@ -13,6 +13,7 @@
     }
     h2 {
       color: #333;
+      text-align: center;
     }
     label {
       display: block;
@@ -50,16 +51,20 @@
       margin: 20px auto;
       display: block;
     }
+    #thankyou-message {
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
   <h2>Financial Independence Calculator</h2>
-  
-  <form id="fi-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST" onsubmit="return false;">
+  <form id="fi-form" action="https://formsubmit.co/trinhthu.mktg@gmail.com" method="POST">
     <!-- Hidden fields for contact info and FormSubmit settings -->
     <input type="hidden" name="contactName" id="contactName">
     <input type="hidden" name="contactEmail" id="contactEmail">
-    <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
     <input type="hidden" name="_captcha" value="false">
     
     <label for="currentAge">Current Age:</label>
@@ -86,14 +91,18 @@
     <label for="investmentReturn">Expected Return on Investments (%):</label>
     <input type="number" id="investmentReturn" name="investmentReturn" placeholder="Enter expected return on investments">
     
-    <button type="button" onclick="calculateFI()">Calculate FI</button>
-    <button type="button" onclick="submitFI()">Submit FI Data</button>
+    <!-- Single button for calculating and auto-submitting FI data -->
+    <button type="button" onclick="calculateAndSubmitFI()">Calculate FI</button>
   </form>
   
   <div class="result" id="result"></div>
-  
-  <canvas id="savingsChart"></canvas>
-  <canvas id="adjustedSavingsChart"></canvas>
+  <div id="chartSection">
+    <canvas id="savingsChart"></canvas>
+    <canvas id="adjustedSavingsChart"></canvas>
+  </div>
+  <div id="thankyou-message" style="display:none;">
+    <h3>Thank you for submitting your FI data!</h3>
+  </div>
   
   <script>
     let savingsChart, adjustedChart;
@@ -111,7 +120,7 @@
       }
     }
     
-    function calculateFI() {
+    function calculateAndSubmitFI() {
       const currentAge = parseInt(document.getElementById('currentAge').value);
       const desiredAge = parseInt(document.getElementById('desiredAge').value);
       const annualIncome = parseFloat(document.getElementById('annualIncome').value);
@@ -124,29 +133,38 @@
       if (isNaN(currentAge) || isNaN(desiredAge) || currentAge >= desiredAge ||
           isNaN(annualExpenses) || isNaN(currentSavings) || isNaN(monthlySavings) ||
           isNaN(inflationRate) || isNaN(investmentReturn)) {
-        alert("Please check your inputs. Ensure all fields are filled correctly and current age is less than desired FI age.");
+        alert("Please check your inputs. Ensure all fields are filled correctly and your current age is less than your desired FI age.");
         return;
       }
       
+      // FI Number using the rule of 25
       const FI_Number = annualExpenses * 25;
       const yearsToFI = desiredAge - currentAge;
       
+      // Use monthly compounding for each year.
+      const monthlyRate = investmentReturn / 12;
       let years = [];
       let projectedSavings = [];
       let adjustedSavings = [];
-      
       let savings = currentSavings;
-      for (let i = 0; i <= yearsToFI; i++) {
-        savings = savings * (1 + investmentReturn) + (monthlySavings * 12);
-        years.push(currentAge + i);
+      
+      // For each full year, calculate the savings using monthly compounding
+      for (let y = 1; y <= yearsToFI; y++) {
+        // Compound for 12 months:
+        savings = savings * Math.pow(1 + monthlyRate, 12) +
+                  monthlySavings * ((Math.pow(1 + monthlyRate, 12) - 1) / monthlyRate);
+        years.push(currentAge + y);
         projectedSavings.push(savings);
-        let adjusted = savings / Math.pow(1 + inflationRate, i);
+        // Discount the savings to today's dollars using inflation
+        let adjusted = savings / Math.pow(1 + inflationRate, y);
         adjustedSavings.push(adjusted);
       }
       
+      // Calculate suggested additional monthly savings if current trajectory falls short
       const totalSavingsNeeded = FI_Number - savings;
       const suggestedMonthlySavings = totalSavingsNeeded > 0 ? totalSavingsNeeded / (yearsToFI * 12) : 0;
       
+      // Display results
       document.getElementById('result').innerHTML = `
         <h3>Results:</h3>
         <p>FI Number: <strong>${FI_Number.toFixed(2)}</strong></p>
@@ -158,6 +176,11 @@
       
       createChart(years, projectedSavings, FI_Number, 'savingsChart', "Projected Savings");
       createChart(years, adjustedSavings, FI_Number, 'adjustedSavingsChart', "Inflation-Adjusted Savings");
+      
+      // After a short delay (to allow users to see results/charts), auto-submit the form via AJAX.
+      setTimeout(() => {
+        submitFI();
+      }, 1500);
     }
     
     function createChart(years, dataArray, FI_Number, canvasId, chartLabel) {
@@ -223,13 +246,23 @@
     }
     
     function submitFI() {
-      // Ensure the calculation has been performed (check if result div is not empty)
-      if (!document.getElementById('result').innerHTML) {
-        alert("Please calculate FI before submitting your data.");
-        return;
-      }
-      // Submit the form so that all inputs (including hidden contact fields) are sent to your email.
-      document.getElementById('fi-form').submit();
+      const form = document.getElementById("fi-form");
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          "Accept": "application/json"
+        }
+      }).then(response => {
+        if (response.ok) {
+          form.style.display = "none";
+          document.getElementById("thankyou-message").style.display = "block";
+        } else {
+          alert("There was an issue submitting your data. Please try again.");
+        }
+      }).catch(error => {
+        alert("Submission error. Please try again.");
+      });
     }
   </script>
 </body>
