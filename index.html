@@ -60,6 +60,7 @@
   <div>
     <a class="nav-button" href="#" onclick="goToPage('survey.html')">Take the Survey</a>
     <a class="nav-button" href="#" onclick="goToPage('fi-calculator.html')">FI Calculator</a>
+    <a class="nav-button" href="#" onclick="goToPage('feedback.html')">Workshop Feedback Survey</a>
   </div>
   
   <script>
@@ -70,7 +71,6 @@
         alert("Please fill in both name and email before proceeding.");
         return;
       }
-      // Save contact info so that other pages can use it.
       localStorage.setItem('contactName', name);
       localStorage.setItem('contactEmail', email);
       window.location.href = page;
